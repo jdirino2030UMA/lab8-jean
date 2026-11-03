@@ -34,13 +34,20 @@ Completa ejercicio 6: resumen de multiples laboratorios
 """
 
 def resumir_laboratorios(laboratorios):
-    # TODO: implementa esta funcion.
-    pass
+    resumen = {}
+    for nombre in laboratorios:
+        tablero = laboratorios[nombre]
+        total = sum([len(fila) for fila in tablero])
+        ocupados = sum([sum(fila) for fila in tablero])
+        resumen[nombre] = (total, ocupados, total - ocupados)
+    return resumen
 
 
 def laboratorios_con_cupo(resumen, cantidad):
-    # TODO: implementa esta funcion.
-    pass
+    if cantidad <= 0:
+        return set()
+    # posicion 2 de la tupla = disponibles
+    return {nombre for nombre in resumen if resumen[nombre][2] >= cantidad}
 
 
 if __name__ == "__main__":
@@ -50,8 +57,26 @@ if __name__ == "__main__":
         "C": [[0, 0, 0]]
     }
 
-    # TODO: escribe las llamadas y muestra los resultados con print.
-    # TODO: agrega al menos un caso propio.
+    resumen = resumir_laboratorios(laboratorios)
+    print("Resumen:", resumen)  # {'A': (6, 2, 4), 'B': (4, 4, 0), 'C': (3, 0, 3)}
+    print("Cupo 3:", laboratorios_con_cupo(resumen, 3))  # {'A', 'C'}
+    print("Cupo 4:", laboratorios_con_cupo(resumen, 4))  # {'A'}
+    print("Cupo 5:", laboratorios_con_cupo(resumen, 5))  # set()
+    print("Cupo 0:", laboratorios_con_cupo(resumen, 0))  # set()
+
+    # caso propio: agrego el D
+    laboratorios["D"] = [[0, 0], [0, 0], [0, 1]]
+    resumen = resumir_laboratorios(laboratorios)
+    print("Resumen con D:", resumen)  # ... 'D': (6, 1, 5)
+    print("Cupo 3:", laboratorios_con_cupo(resumen, 3))  # {'A', 'C', 'D'}
+    print("Cupo 4:", laboratorios_con_cupo(resumen, 4))  # {'A', 'D'}
+    print("Cupo 5:", laboratorios_con_cupo(resumen, 5))  # {'D'}
+    print("Cupo 0:", laboratorios_con_cupo(resumen, 0))  # set()
 
 # ANALISIS
-# TODO: responde aqui las preguntas del enunciado.
+# resumir_laboratorios: revisa todos los puestos de todos los laboratorios
+# (sum y len recorren cada fila). Cada puesto se mira una cantidad fija de
+# veces, asi que el trabajo crece con el total de puestos -> O(P).
+# laboratorios_con_cupo: no toca los tableros, solo revisa una tupla del
+# resumen por laboratorio y saca la posicion 2, que es O(1). Son L
+# laboratorios -> O(L).
