@@ -27,20 +27,36 @@ Completa ejercicio 4: reportes y transformacion de estados
 """
 
 def resumir_filas(puestos):
-    # TODO: implementa esta funcion.
-    pass
+    # como los ocupados son 1, sum(fila) da justo los ocupados
+    return [(i, sum(puestos[i]), len(puestos[i]) - sum(puestos[i]))
+            for i in range(len(puestos))]
 
 
 def transformar_estados(puestos, transformar):
-    # TODO: implementa esta funcion.
-    pass
+    # tabla nueva, se conservan las filas
+    return [[transformar(estado) for estado in fila] for fila in puestos]
 
 
 if __name__ == "__main__":
     puestos = [[1, 0, 1, 0], [0, 0, 1, 0], [1, 1, 1, 0]]
 
-    # TODO: escribe las llamadas y muestra los resultados con print.
-    # TODO: agrega al menos un caso propio.
+    print("Resumen:", resumir_filas(puestos))  # [(0, 2, 2), (1, 1, 3), (2, 3, 1)]
+
+    a_texto = lambda estado: "Disponible" if estado == 0 else "Ocupado"
+    textos = transformar_estados(puestos, a_texto)
+    print("Textos:", textos)
+    print("Original:", puestos)  # sigue igual
+
+    # caso propio: una sola fila
+    una_fila = [[0, 1, 1, 0, 1]]
+    print("Resumen propio:", resumir_filas(una_fila))  # [(0, 3, 2)]
+    print("Textos propio:", transformar_estados(una_fila, a_texto))
+    # [['Disponible', 'Ocupado', 'Ocupado', 'Disponible', 'Ocupado']]
+    print("Original propio:", una_fila)
 
 # ANALISIS
-# TODO: responde aqui las preguntas del enunciado.
+# - No. La comprension se escribe mas corto, pero por dentro igual recorre
+#   cada puesto uno por uno, como los dos for anidados. Cambia la forma de
+#   escribirlo, no el trabajo que se hace.
+# - Se transforman 12 estados (3 filas x 4 columnas), la lambda se llama
+#   12 veces.
