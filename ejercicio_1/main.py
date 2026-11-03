@@ -27,20 +27,36 @@ Completa ejercicio 1: mapa y puestos disponibles
 """
 
 def crear_mapa(puestos):
-    # TODO: implementa esta funcion.
-    pass
+    # clave = (fila, columna), valor = el 0 o el 1 de esa celda
+    return {(i, j): puestos[i][j]
+            for i in range(len(puestos))
+            for j in range(len(puestos[i]))}
 
 
 def obtener_disponibles(puestos):
-    # TODO: implementa esta funcion.
-    pass
+    # solo las coordenadas donde hay un 0
+    return {(i, j)
+            for i in range(len(puestos))
+            for j in range(len(puestos[i]))
+            if puestos[i][j] == 0}
 
 
 if __name__ == "__main__":
     puestos = [[1, 0, 1], [0, 0, 1]]
 
-    # TODO: escribe las llamadas y muestra los resultados con print.
-    # TODO: agrega al menos un caso propio.
+    mapa = crear_mapa(puestos)
+    print("Mapa:", mapa)
+    print("Disponibles:", obtener_disponibles(puestos))
+    print("Estado de (1, 2):", mapa[(1, 2)])  # 1
+    print("Tablero sin cambios:", puestos)
+
+    # caso propio: 3x2, todo ocupado menos dos puestos
+    otro = [[1, 1], [0, 1], [1, 0]]
+    print("Mapa propio:", crear_mapa(otro))
+    print("Disponibles propio:", obtener_disponibles(otro))  # {(1, 0), (2, 1)}
 
 # ANALISIS
-# TODO: responde aqui las preguntas del enunciado.
+# - En el ejemplo se revisan las 6 celdas (2 filas x 3 columnas), hay que
+#   mirar todas para saber cuales son 0.
+# - Con f filas y c columnas se revisan f * c celdas -> O(f*c).
+#   Si son n filas y n columnas: n * n = n^2 celdas -> O(n^2).
