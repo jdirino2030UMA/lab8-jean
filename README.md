@@ -39,10 +39,10 @@ Adapta la ruta y el mensaje a cada ejercicio. Si no terminas un ejercicio,
 guarda tambien tu avance con un mensaje que indique que esta incompleto.
 
 ## Registro final
-- Ejercicios completados:
-- Retos completados:
-- Ejercicios incompletos y que falta:
-- Dificultad encontrada y como la resolvi:
+- Ejercicios completados: 1, 2, 3 y 4.
+- Retos completados: 5 y 6.
+- Ejercicios incompletos y que falta: ninguno.
+- Dificultad encontrada y como la resolvi: en el 5 al principio reservaba cada puesto apenas lo revisaba y quedaban cambios a medias cuando habia uno malo. Lo arregle separando en dos ciclos: primero reviso todo y despues reservo.
 
 Antes de entregar, comprueba en GitHub que aparecen los archivos actualizados
 y los commits. Entrega el enlace al repositorio; debe ser accesible a la profesora.
