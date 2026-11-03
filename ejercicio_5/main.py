@@ -34,15 +34,48 @@ Completa ejercicio 5: reserva de grupos sin cambios parciales
 """
 
 def reservar_grupo(puestos, coordenadas):
-    # TODO: implementa esta funcion.
-    pass
+    if len(coordenadas) == 0:
+        return False
+
+    # si al pasarlo a set se pierden elementos, habia repetidos
+    if len(set(coordenadas)) != len(coordenadas):
+        return False
+
+    # primero se revisa todo, sin tocar nada
+    for fila, columna in coordenadas:
+        if fila < 0 or fila >= len(puestos):
+            return False
+        if columna < 0 or columna >= len(puestos[0]):
+            return False
+        if puestos[fila][columna] == 1:
+            return False
+
+    # si llego aqui, todo esta bien y ya se puede reservar
+    for fila, columna in coordenadas:
+        puestos[fila][columna] = 1
+    return True
 
 
 if __name__ == "__main__":
     puestos = [[1, 0, 0], [0, 1, 0]]
 
-    # TODO: escribe las llamadas y muestra los resultados con print.
-    # TODO: agrega al menos un caso propio.
+    casos = [
+        [(0, 1), (1, 0)],   # True
+        [(0, 1), (0, 1)],   # False, repetida
+        [(0, 1), (0, 0)],   # False, (0, 0) ocupado
+        [(0, 1), (8, 0)],   # False, fila 8 no existe
+        [],                 # False, vacia
+        [(0, 2), (1, 2)],   # propio: True, la columna 2 esta libre
+        [(1, 2), (-1, 0)],  # propio: False, negativo y no cambia (1, 2)
+    ]
+
+    for grupo in casos:
+        tablero = [[estado for estado in fila] for fila in puestos]  # copia nueva
+        print(grupo, "->", reservar_grupo(tablero, grupo), tablero)
 
 # ANALISIS
-# TODO: responde aqui las preguntas del enunciado.
+# Porque si se reserva cada uno apenas se revisa y despues aparece uno malo
+# (ocupado, fuera del tablero o repetido), la funcion devuelve False pero los
+# primeros ya quedaron en 1. El tablero quedaria a medias, con puestos
+# reservados de un grupo que no se pudo reservar. Por eso primero se revisa
+# todo el grupo y solo al final se cambia.
